@@ -1,5 +1,33 @@
-@import'./reset.scss'
+/* 引入初始化样式 */
+@import'./reset.scss';
 
- /* 自己的scss样式 */
+/* 自己的scss样式 */
+#c-aside {
+  .el-menu-vertical-demo {
+    .el-menu-item {
+      line-height: 48px;
+      height: 48px;
+    }
 
- 
+    .el-menu-item.is-active {
+      color: #fff;
+      background: #2294FF;
+      height: 48px;
+      line-height: 48px;
+
+
+    }
+
+    .el-submenu {
+      .el-submenu__title {
+        line-height: 48px;
+        height: 48px;
+      }
+
+      .el-menu-item {
+        line-height: 48px;
+        height: 48px;
+      }
+    }
+  }
+}

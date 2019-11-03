@@ -1,20 +1,20 @@
 <template>
   <div>
-    <common></common>
+    <commons></commons>
   </div>
 </template>
 
 <script>
-import Common from "common/common";
+import commons from 'common/common';
 export default {
-  name: "index",
-  components: { Common },
-  props: {},
-  data() {
-    return {};
-  },
-  computed: {},
-  methods: {}
+    name: 'index',
+    components: { commons },
+    props: {},
+    data () {
+        return {};
+    },
+    computed: {},
+    methods: {}
 };
 </script>
 <style lang='scss' scoped>
