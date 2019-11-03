@@ -1,2 +1,1 @@
-# myvueadmin
-mycodeadmin
+# vue-admin
