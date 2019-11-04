@@ -1,10 +1,10 @@
 <template>
-  <div></div>
+  <div>main</div>
 </template>
 
 <script>
 export default {
-  name: "index_components",
+  name: "view-main-index",
   components: {},
   props: {},
   data() {

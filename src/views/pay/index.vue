@@ -1,14 +1,11 @@
 <template>
-  <div>
-    <commons></commons>
-  </div>
+  <div></div>
 </template>
 
 <script>
-import commons from "common/common";
 export default {
-  name: "index",
-  components: { commons },
+  name: "pay",
+  components: {},
   props: {},
   data() {
     return {};

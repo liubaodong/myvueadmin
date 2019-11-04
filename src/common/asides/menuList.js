@@ -10,11 +10,11 @@ export const MenuList = [{
   },
   {
     title: "缴费",
-    key: "/table",
+    key: "/pay",
     icon: "el-icon-receiving",
     children: [{
       title: "缴费设置",
-      key: "/table/basic",
+      key: "/pay/index",
       icon: "el-icon-date"
     }, ]
   },

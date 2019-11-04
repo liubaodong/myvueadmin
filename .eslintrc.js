@@ -22,7 +22,10 @@ module.exports = {
     'vue/no-parsing-error': 0,
     'no-unused-vars': 0,
     'indent': 0,
-    'comma-dangle': 0
+    'comma-dangle': 0,
+    'no-multiple-empty-lines': 0,
+    'vue/no-dupe-keys': 'off',
+    'vue/require-prop-type-constructor': 'off'
   },
   parserOptions: {
     parser: 'babel-eslint'

@@ -2,20 +2,23 @@
   <div>
     <div v-for="(item, i) in data" :key="item.title">
       <!-- 一级菜单 -->
-      <el-menu-item v-if="!item.children || item.children.length === 0" :index="String(item.key)">
-        <template slot="title">
-          <i :class="item.icon"></i>
-          <!-- <span slot="title">{{item.title}}</span> -->
-          {{item.title}}
-          <i class="icon" :class="item.rIcon"></i>
-        </template>
+      <el-menu-item
+        @click="getData"
+        v-if="!item.children || item.children.length === 0"
+        :index="String(item.key)"
+      >
+        <i :class="item.icon"></i>
+        <!-- <span slot="title">{{item.title}}</span> -->
+
+        <span slot="title">{{item.title}}</span>
+        <i class="icon" :class="item.rIcon"></i>
       </el-menu-item>
       <!-- 子级菜单循环 -->
       <el-submenu v-else :index="String(item.title)">
         <template slot="title">
           <i :class="item.icon"></i>
           <!-- <span slot="title">{{item.title}}</span> -->
-          {{item.title}}
+          <span slot="title" v-if="!toggle">{{item.title}}</span>
         </template>
         <a-item :data="item.children"></a-item>
       </el-submenu>
@@ -27,12 +30,16 @@
 export default {
   name: "a-item",
   components: {},
-  props: { data: null },
+  props: { toggle: null, data: null },
   data() {
     return {};
   },
   computed: {},
-  methods: {},
+  methods: {
+    getData() {
+      console.log(1);
+    }
+  },
   mounted() {}
 };
 </script>

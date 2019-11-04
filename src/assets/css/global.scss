@@ -6,3 +6,8 @@ html {
   width: 100%;
   box-sizing: border-box;
 }
+
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+  width: 250px;
+  min-height: 400px;
+}

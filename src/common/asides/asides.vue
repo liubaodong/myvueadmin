@@ -1,17 +1,18 @@
 <template>
   <div id="c-aside">
     <el-menu
-      router
+      :router="router"
       text-color="#666"
       default-active="/house"
       module="vertical"
       @open="handleOpen"
       @select="handleSelect"
+      :collapse="toggle"
       class="el-menu-vertical-demo"
     >
       <!-- 调用树形递归组件 -->
       <slot name="list">
-        <a-item :data="menuList"></a-item>
+        <a-item :data="menuList" :toggle="toggle"></a-item>
       </slot>
     </el-menu>
   </div>
@@ -23,7 +24,10 @@ import menuList from "./menuList.js";
 export default {
   name: "asides",
   components: { aItem },
-  props: {},
+  props: {
+    toggle: { type: Boolean, default: false },
+    router: { type: Boolean, default: true }
+  },
   data() {
     return {
       menuList
@@ -32,10 +36,10 @@ export default {
   computed: {},
   methods: {
     handleOpen(key, keyPath) {
-      console.log("--open--", key, keyPath);
+      // console.log("--open--", key, keyPath);
     },
     handleSelect(key, keyPath) {
-      console.log("--select--", key, keyPath);
+      // console.log("--select--", key, keyPath);
       this.$emit("asidePath", { key, keyPath });
     }
   }

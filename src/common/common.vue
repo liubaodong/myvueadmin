@@ -5,23 +5,21 @@
         <headers>
           <template v-slot:left></template>
           <template v-slot:container>
-            <el-button size="mini" icon="el-icon-s-fold"></el-button>
+            <el-button @click="toggleBtn" size="mini" icon="el-icon-s-fold"></el-button>
           </template>
           <template v-slot:right></template>
         </headers>
       </el-header>
       <el-container class="c-container">
-        <el-aside width="255px">
-          <asides @asidePath="asidePath($event)"></asides>
-        </el-aside>
+        <asides :toggle="toggle" @asidePath="asidePath($event)"></asides>
+
         <el-main class="c-main">
           <el-container>
             <el-header>
               <bread-crumb :bread="currentPuth"></bread-crumb>
             </el-header>
             <el-main class="m-main">
-              <!-- <router-view></router-view> -->
-              <mains></mains>
+              <router-view></router-view>
             </el-main>
           </el-container>
         </el-main>
@@ -34,23 +32,25 @@
 import asides from "./asides/asides";
 import aItem from "./asides/item";
 
-import menuList from "./asides/menuList";
 import headers from "./headers/headers";
-import mains from "./main/main";
 import breadCrumb from "./breadcrumb/bread-crumb";
 export default {
   name: "common",
-  components: { asides, aItem, headers, mains, breadCrumb },
+  components: { asides, aItem, headers, breadCrumb },
   props: {},
   data() {
     return {
-      currentPuth: ["首页"]
+      currentPuth: ["首页"],
+      toggle: false
     };
   },
   computed: {},
   methods: {
     asidePath(e) {
       this.currentPuth = e.keyPath;
+    },
+    toggleBtn() {
+      this.toggle = !this.toggle;
     }
   }
 };
@@ -67,6 +67,7 @@ export default {
     .m-main {
       background: #ccc;
       border-radius: 4px;
+      min-height: 860px;
     }
   }
 }
