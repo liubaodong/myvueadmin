@@ -1,7 +1,10 @@
 <template>
   <div class="house">
     <c-header>
-      <template v-slot:container>梨奈克打狗</template>
+      <template v-slot:container>
+        <input type="text" v-model="search" />
+        <span>{{search}}</span>
+      </template>
     </c-header>
     <el-container>
       <a-sides :router="true" style="width: 250px">
@@ -33,6 +36,7 @@
 </template>
 
 <script>
+import { debounce } from "@/utils/utils";
 import aSides from "common/asides/asides";
 import aItem from "common/asides/item";
 import cHeader from "components/cheader";
@@ -40,25 +44,25 @@ export const insetList = [
   {
     title: "侧边栏",
     key: "/house/main",
-    icon: "el-icon-s-home",
+    icon: "el-icon-folder",
     rIcon: ""
   },
   {
     title: "业主管理",
     key: "/form",
-    icon: "el-icon-film",
+    icon: "el-icon-folder",
     rIcon: ""
   },
   {
     title: "缴费",
     key: "/table",
-    icon: "el-icon-film",
+    icon: "el-icon-folder",
     rIcon: "",
     children: [
       {
         title: "缴费设置",
         key: "/table/basic",
-        icon: "el-icon-date",
+        icon: "el-icon-folder",
         rIcon: ""
       }
     ]
@@ -66,22 +70,22 @@ export const insetList = [
   {
     title: "物业保修",
     key: "/rich",
-    icon: "el-icon-wallet"
+    icon: "el-icon-folder"
   },
   {
     title: "投诉表扬",
     key: "/city",
-    icon: "el-icon-office-building"
+    icon: "el-icon-folder"
   },
   {
     title: "员工管理",
     key: "/order",
-    icon: "el-icon-notebook-1"
+    icon: "el-icon-folder"
   },
   {
     title: "通知公告",
     key: "/bikeMap",
-    icon: "el-icon-place"
+    icon: "el-icon-folder"
   }
 ];
 
@@ -92,10 +96,21 @@ export default {
   watch: {
     filterText(val) {
       this.$refs.tree.filter(val);
+    },
+    // 例子1
+    search(val) {
+      this.EditEMailValid(val);
     }
+    // 例子2
+    // search: {
+    //   handler(val) {
+    //     this.EditEMailValid(val);
+    //   }
+    // }
   },
   data() {
     return {
+      search: "",
       insetList,
       filterText: "",
       data: [
@@ -150,6 +165,9 @@ export default {
   },
   computed: {},
   methods: {
+    EditEMailValid: debounce(val => {
+      console.log("test", val);
+    }, 500),
     filterNode(value, data) {
       if (!value) return true;
       return data.label.indexOf(value) !== -1;

@@ -1,3 +1,11 @@
+<!--
+ * @description: 头部描述
+ * @Author: Coder
+ * @Date: 2019-11-04 10:42:43
+ * @LastEditors: Coder
+ * @LastEditTime: 2019-11-07 16:05:12
+ * @FilePath: \myvueadmin\src\components\view-header\view-header.vue
+ -->
 <template>
   <div class="view-main">
     <div class="header">
@@ -18,8 +26,8 @@
         <slot name="desc">{{data.desc}}</slot>
       </div>
     </div>
-    <!-- <el-button type="text" @click="show">点击打开 Dialog</el-button>
-    <dialogs :show="centerDialogVisible" @closeDialogs="closeDialogs($event)"></dialogs>-->
+    <el-button type="text" @click="show">点击打开 Dialog</el-button>
+    <dialogs :show="centerDialogVisible" @closeDialogs="closeDialogs($event)"></dialogs>
   </div>
 </template>
 

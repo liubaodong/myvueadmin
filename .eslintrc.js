@@ -1,3 +1,11 @@
+/*
+ * @description: 头部描述
+ * @Author: Coder
+ * @Date: 2019-11-03 19:19:15
+ * @LastEditors: Coder
+ * @LastEditTime: 2019-11-17 00:09:58
+ * @FilePath: \myvueadmin\.eslintrc.js
+ */
 module.exports = {
   root: true,
   env: {
@@ -25,7 +33,16 @@ module.exports = {
     'comma-dangle': 0,
     'no-multiple-empty-lines': 0,
     'vue/no-dupe-keys': 'off',
-    'vue/require-prop-type-constructor': 'off'
+    'vue/require-prop-type-constructor': 'off',
+    "padded-blocks": 0,
+    "space-before-blocks": 0,
+    "no-unused-expressions": 0,
+    "vue/require-valid-default-prop": 0,
+    "spaced-comment": 0,
+    "vue/no-side-effects-in-computed-properties": 0,
+    "no-return-assign": 0,
+    "no-undef": 0,
+    "no-unreachable": 0
   },
   parserOptions: {
     parser: 'babel-eslint'

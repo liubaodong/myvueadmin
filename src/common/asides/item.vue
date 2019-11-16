@@ -1,3 +1,11 @@
+<!--
+ * @description: 头部描述
+ * @Author: Coder
+ * @Date: 2019-11-03 19:19:15
+ * @LastEditors: Coder
+ * @LastEditTime: 2019-11-07 20:43:03
+ * @FilePath: \myvueadmin\src\common\asides\item.vue
+ -->
 <template>
   <div>
     <div v-for="(item, i) in data" :key="item.title">
@@ -17,7 +25,6 @@
       <el-submenu v-else :index="String(item.title)">
         <template slot="title">
           <i :class="item.icon"></i>
-          <!-- <span slot="title">{{item.title}}</span> -->
           <span slot="title" v-if="!toggle">{{item.title}}</span>
         </template>
         <a-item :data="item.children"></a-item>

@@ -1,3 +1,11 @@
+<!--
+ * @description: 头部描述
+ * @Author: Coder
+ * @Date: 2019-11-03 19:19:15
+ * @LastEditors: Coder
+ * @LastEditTime: 2019-11-14 16:12:16
+ * @FilePath: \myvueadmin\src\common\common.vue
+ -->
 <template>
   <div>
     <el-container>
@@ -65,7 +73,7 @@ export default {
   .c-main {
     padding: 0 !important;
     .m-main {
-      background: #ccc;
+      // background: #ccc;
       border-radius: 4px;
       min-height: 860px;
     }

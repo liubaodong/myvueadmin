@@ -1,10 +1,17 @@
+<!--
+ * @description: 头部描述
+ * @Author: Coder
+ * @Date: 2019-11-03 22:08:24
+ * @LastEditors: Coder
+ * @LastEditTime: 2019-11-07 16:06:31
+ * @FilePath: \myvueadmin\src\components\dialogs.vue
+ -->
 <template>
   <div>
     <el-dialog
       title="提示"
       close-on-press-escape
       close-on-click-modal
-      :show-close="false"
       :visible.sync="show"
       width="30%"
       center
