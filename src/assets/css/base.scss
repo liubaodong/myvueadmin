@@ -36,32 +36,33 @@
 
 //  dialog 样式
 
-.dialog {
-  .el-dialog {
-    margin: 0 !important;
-    height: 100% !important;
-    float: right;
+// .dialog {
+//   .el-dialog {
+//     margin: 0 !important;
+//     height: 100% !important;
+//     float: right;
 
-    .el-dialog__header {
-      border-bottom: 1px solid #ccc;
-    }
-  }
-}
+//     .el-dialog__header {
+//       border-bottom: 1px solid #ccc;
+//     }
+//   }
+// }
 
-.in-dialog {
-  .el-dialog__body {
-    min-height: 400px !important;
-  }
-}
+// .in-dialog {
+//   .el-dialog__body {
+//     min-height: 400px !important;
+//   }
+// }
 
-#input {
-  background: transparent !important;
-  border: 0 !important;
-  color: #fff;
-}
+// #input {
+//   background: transparent !important;
+//   border: 0 !important;
+//   color: #fff;
+// }
 
-#input-c {
-  background: transparent !important;
-  border: 0 !important;
-  color: #21A76D;
-}
+// #input-c {
+//   background: transparent !important;
+//   border: 0 !important;
+//   color: #21A76D;
+// }
+@import '@/views/flow/flow-scss.scss'

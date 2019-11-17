@@ -3,7 +3,7 @@
  * @Author: Coder
  * @Date: 2019-11-17 19:46:34
  * @LastEditors: Coder
- * @LastEditTime: 2019-11-17 21:16:25
+ * @LastEditTime: 2019-11-17 21:43:51
  * @FilePath: \myvueadmin\src\views\flow\setting-approver.vue
  -->
 <template>
@@ -37,6 +37,27 @@
       :visible.sync="innerVisible"
       append-to-body
     >
+      <el-row type="flex" align="center">
+        <el-col :span="12">
+          <el-checkbox-group
+            v-model="checkedCities"
+            @change="handleCheckedCitiesChange"
+          >
+            <el-checkbox
+              v-for="city in cityOptions"
+              :label="city"
+              :key="city"
+              >{{ city }}</el-checkbox
+            >
+          </el-checkbox-group>
+        </el-col>
+        <el-col :span="12">
+          <el-row v-for="item in arrCopy">
+            {{ item }}
+          </el-row>
+        </el-col>
+      </el-row>
+
       <div slot="footer" class="dialog-footer">
         <el-button @click="innerVisible = false">取 消</el-button>
         <el-button type="primary" @click="choseUser"> 确 定</el-button>
@@ -68,13 +89,9 @@ export default {
         { value: 'APPROVER_CONTACTS', name: "联系人", },
         { value: 'APPROVER_MULTI_SUPERVISOR', name: "多级主管" }
       ],
-      obj: [
-        { label: 1, name: 'diyi' },
-        { label: 2, name: 'dier' },
-        { label: 3, name: 'disan' },
-        { label: 4, name: 'disi' },
-        { label: 5, name: 'diwu' },
-      ]
+      cityOptions: ['上海', '北京', '广州', '深圳'],
+      checkedCities: [],
+      arrCopy: []
     }
   },
   computed: {
@@ -87,7 +104,15 @@ export default {
 
     choseUser() {
       this.innerVisible = false
-      console.log(1)
+      console.log(this.arrCopy)
+    },
+
+    handleCheckedCitiesChange(value) {
+      this.arrCopy = value
+      console.log('value', value)
+      // let checkedCount = value.length;
+      // this.checkAll = checkedCount === this.cities.length;
+      // this.isIndeterminate = checkedCount > 0 && checkedCount < this.cities.length;
     }
   },
 }
