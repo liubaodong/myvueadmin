@@ -3,7 +3,7 @@
  * @Author: Coder
  * @Date: 2019-11-14 14:04:47
  * @LastEditors: Coder
- * @LastEditTime: 2019-11-17 02:22:43
+ * @LastEditTime: 2019-11-17 19:44:34
  * @FilePath: \myvueadmin\src\views\flow\index.vue
  -->
 <template>
@@ -23,7 +23,12 @@
       </div>
       <!-- 下面的竖线 -->
       <div class="line">
-        <el-popover v-model="visible" placement="right" width="400" trigger="click">
+        <el-popover
+          v-model="visible"
+          placement="right"
+          width="400"
+          trigger="click"
+        >
           <el-button
             slot="reference"
             class="line-btn"
@@ -35,15 +40,30 @@
           <!-- 里面条件 -->
           <el-row type="flex" justify="center" align="center">
             <el-col :span="8" style="text-align: center; padding: 29px 0">
-              <el-button type="warning" icon="el-icon-s-promotion" circle @click="add('approver')" />
+              <el-button
+                type="warning"
+                icon="el-icon-s-promotion"
+                circle
+                @click="add('approver')"
+              />
               <el-col style="margin-top: 10px">审批人</el-col>
             </el-col>
             <el-col :span="8" style="text-align: center;  padding: 29px 0">
-              <el-button type="danger" icon="el-icon-edit" circle @click="add('notifier')" />
+              <el-button
+                type="danger"
+                icon="el-icon-edit"
+                circle
+                @click="add('notifier')"
+              />
               <el-col style="margin-top: 10px">抄送人</el-col>
             </el-col>
             <el-col :span="8" style="text-align: center;  padding: 29px 0">
-              <el-button type="success" icon="el-icon-share" circle @click="add('conditionEnter')" />
+              <el-button
+                type="success"
+                icon="el-icon-share"
+                circle
+                @click="add('conditionEnter')"
+              />
               <el-col style="margin-top: 10px">条件分支</el-col>
             </el-col>
             <i class="el-icon-close" @click="visible = !visible" />
@@ -52,7 +72,13 @@
       </div>
       <!-- 审批流程    -->
       <template v-if="treeData.nodeType">
-        <node :myIndex="0" :broLength="1" :pId="treeData.id" :treeData="treeData" :plin="0"></node>
+        <node
+          :myIndex="0"
+          :broLength="1"
+          :pId="treeData.id"
+          :treeData="treeData"
+          :plin="0"
+        ></node>
       </template>
       <!-- 结束线 -->
       <div v-else class="done">
@@ -61,7 +87,15 @@
         <span>流程结束</span>
       </div>
     </div>
-    <c-dialog :show.sync="dialogOption.show" :option="dialogOption" @outPut="outPut($event)"></c-dialog>
+    <c-dialog
+      :show.sync="dialogOption.show"
+      :option="dialogOption"
+      @outPut="outPut($event)"
+    ></c-dialog>
+
+    <el-footer>
+      <el-button type="primary" @click="successData">发布</el-button>
+    </el-footer>
   </div>
 </template>
 
@@ -72,7 +106,7 @@ import node from './node'
 export default {
   name: 'flow',
   components: {
-    cDialog, node
+    cDialog, node,
   },
   props: {
 
@@ -88,7 +122,10 @@ export default {
     this.eventBus.$on('addChildNode', this.addChildNode)
   },
   destroyed() {
-    this.eventBus.$off('delNode', this.delNode)
+    this.flowFun = null
+    this.eventBus.$on('delNode', this.delNode)
+    this.eventBus.$on('addBro', this.addBro)
+    this.eventBus.$on('addChildNode', this.addChildNode)
   },
   data() {
     return {
@@ -101,43 +138,49 @@ export default {
         show: false
       },
       treeData: {
-
       },
     }
   },
   watch: {
-    // treeData: {
-    //   handler() {
-    //     this.$nextTick(() => {
-    //       const wrapdom = document.querySelector(".body");
-    //       const treedom = wrapdom.querySelectorAll(".node-wrap");
-    //       let width = 1700;
-    //       treedom.forEach(i => {
-    //         if (i.scrollWidth > width) {
-    //           width = i.scrollWidth;
-    //         }
-    //       });
-    //       if (width !== 1700) {
-    //         wrapdom.style.width = `${width}px`;
-    //       } else {
-    //         wrapdom.style.width = "100%";
-    //       }
-    //     });
-    //   },
-    //   deep: true
-    // }
+    treeData: {
+      handler() {
+        this.$nextTick(() => {
+          const wrapdom = document.querySelector(".body");
+          const treedom = wrapdom.querySelectorAll(".node-wrap");
+          let width = 1700;
+          treedom.forEach(i => {
+            if (i.scrollWidth > width) {
+              width = i.scrollWidth;
+            }
+          });
+          if (width !== 1700) {
+            wrapdom.style.width = `${width}px`;
+          } else {
+            wrapdom.style.width = "100%";
+          }
+        });
+      },
+      deep: true
+    }
   },
   computed: {
 
   },
   methods: {
+    successData() {
+      console.log('successData', this.treeData, this.flowFun.stack)
+    },
     editDialog() {
       this.dialogOption.show = true
     },
     outPut(e) {
-      //  console.log(e)
+      console.log(e)
+    },
+    approverDialog(e) {
+      console.log(e)
     },
     add(type) {
+      // 判断添加的类型
       if (type === 'conditionEnter') {
         const obj = {
           id: this.flowFun.getId(),
@@ -147,7 +190,7 @@ export default {
               id: this.flowFun.getId(),
               nodeType: "condition",
               operationCode: "",
-              name: "",
+              name: "条件",
               operationname: "",
               checkVal: [],
               ruleArr: []
@@ -156,7 +199,7 @@ export default {
               id: this.flowFun.getId(),
               nodeType: "condition",
               operationCode: "",
-              name: "",
+              name: "条件",
               operationname: "",
               checkVal: [],
               ruleArr: []
@@ -175,7 +218,7 @@ export default {
         const obj = {
           id: this.flowFun.getId(),
           nodeType: type,
-          name: "",
+          name: type === 'approver' ? '审批人' : '抄送人'
         };
         if (this.treeData.id) {
           obj.childNode = this.flowFun.deepCopy(this.treeData)
@@ -188,7 +231,9 @@ export default {
       this.visible = false
       // console.log('pushData', this.treeData)
       this.flowFun.pushStack(this.treeData)
-
+      this.$nextTick(() => {
+        this.reload();
+      });
     },
     // 重载
     reload() {
@@ -209,6 +254,10 @@ export default {
       } else {
         this.$set(this, "treeData", {});
       }
+      this.$nextTick(() => {
+        this.reload();
+      });
+      // console.log('treeData', this.treeData, this.flowFun.stack)
     },
     // 添加兄弟节点
     addBro(pId) {
@@ -223,25 +272,20 @@ export default {
       };
 
       const treeData = this.flowFun.addChildNode(this.treeData, obj)
-      this.$set(this, 'treeData', treeData);
+      this.$set(this, 'treeData', this.flowFun.deepCopy(treeData));
       this.$nextTick(() => {
         this.reload();
       });
     },
     //添加子节点
     addChildNode(obj) {
-      this.flowFun.pushStack(JSON.parse(JSON.stringify(this.treeData)));
+      // console.log('indexObj', obj)
       const treeData = this.flowFun.addChildNode(this.treeData, obj);
-      this.$set(this, "treeData", treeData);
+      this.flowFun.pushStack(treeData);
+      this.$set(this, "treeData", this.flowFun.deepCopy(treeData));
       this.$nextTick(() => {
         this.reload();
       });
-      //debugger
-      // this.flowFun.pushStack(JSON.parse(JSON.stringify(this.treeData)));
-
-      // const treeData = this.flowFun.addChildNode(this.treeData, obj)
-      // this.flowFun.pushStack(treeData);
-      // this.$set(this, 'treeData', this.flowFun.deepCopy(treeData));
     }
 
   },

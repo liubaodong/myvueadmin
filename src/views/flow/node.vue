@@ -3,7 +3,7 @@
  * @Author: Coder
  * @Date: 2019-11-14 14:05:12
  * @LastEditors: Coder
- * @LastEditTime: 2019-11-17 01:24:54
+ * @LastEditTime: 2019-11-17 19:49:01
  * @FilePath: \myvueadmin\src\views\flow\node.vue
  -->
 <template>
@@ -18,10 +18,10 @@
     ></div>
     <!-- 节点本身一个div一个块 -->
     <!-- 审批人节点 -->
-    <div class="box cStyle" v-if="treeData.nodeType ==='approver'">
+    <div class="box cStyle" v-if="treeData.nodeType === 'approver'">
       <el-row class="bo">
         <el-col :span="21">
-          <el-input id="input" size="mini" v-model="value"></el-input>
+          <el-input id="input" size="mini" v-model="treeData.name"></el-input>
         </el-col>
         <el-col :span="3">
           <i class="el-icon-close white" @click="delNode"></i>
@@ -35,10 +35,10 @@
       </div>
     </div>
     <!-- 抄送人节点 -->
-    <div class="box cStyle" v-if="treeData.nodeType ==='notifier'">
+    <div class="box cStyle" v-if="treeData.nodeType === 'notifier'">
       <el-row class="bw">
         <el-col :span="21">
-          <el-input id="input" size="mini" v-model="value"></el-input>
+          <el-input id="input" size="mini" v-model="treeData.name"></el-input>
         </el-col>
         <el-col :span="3">
           <i class="el-icon-close white" @click="delNode"></i>
@@ -52,12 +52,16 @@
       </div>
     </div>
     <!-- 条件节点 -->
-    <div class="box cStyle" v-if="treeData.nodeType ==='condition'">
+    <div class="box cStyle" v-if="treeData.nodeType === 'condition'">
       <el-row class="lh28">
         <el-col :span="12">
-          <el-input id="input-c" size="mini" v-model="value2">haha1</el-input>
+          <el-input id="input-c" size="mini" v-model="treeData.name"
+            >haha1</el-input
+          >
         </el-col>
-        <el-col :span="8" style="color: #999999; font-size: 12px;">优先级</el-col>
+        <el-col :span="8" style="color: #999999; font-size: 12px;"
+          >优先级</el-col
+        >
         <el-col :span="3">
           <i class="el-icon-close black" @click="delNode"></i>
         </el-col>
@@ -75,7 +79,12 @@
       :class="'heiLine' + treeData.id"
       v-if="treeData.nodeType !== 'conditionEnter'"
     >
-      <el-popover v-model="visible" placement="right" width="400" trigger="click">
+      <el-popover
+        v-model="visible"
+        placement="right"
+        width="400"
+        trigger="click"
+      >
         <el-button
           slot="reference"
           class="line-btn"
@@ -95,7 +104,12 @@
             <el-col style="margin-top: 10px">审批人</el-col>
           </el-col>
           <el-col :span="8" style="text-align: center;  padding: 29px 0">
-            <el-button type="danger" icon="el-icon-edit" circle @click="addChildNode('notifier')" />
+            <el-button
+              type="danger"
+              icon="el-icon-edit"
+              circle
+              @click="addChildNode('notifier')"
+            />
             <el-col style="margin-top: 10px">抄送人</el-col>
           </el-col>
           <el-col :span="8" style="text-align: center;  padding: 29px 0">
@@ -113,13 +127,19 @@
     </div>
     <!-- 添加兄弟节点 -->
     <div
-      v-if="myIndex+1 === broLength && treeData.nodeType==='condition'"
+      v-if="myIndex + 1 === broLength && treeData.nodeType === 'condition'"
       class="adBroBtn"
       @click="addBro"
-    >添加条件</div>
+    >
+      添加条件
+    </div>
 
     <!-- 遍历子节点  -->
-    <div v-if="treeData.conditionNodes" class="node-wrap" :class="'node-wrap' + treeData.id">
+    <div
+      v-if="treeData.conditionNodes"
+      class="node-wrap"
+      :class="'node-wrap' + treeData.id"
+    >
       <node
         v-for="(item, i) in treeData.conditionNodes"
         :key="i"
@@ -142,9 +162,17 @@
     <div
       class="line"
       :class="'heiLine' + treeData.id"
-      v-if="treeData.nodeType === 'conditionEnter' "
+      v-if="
+        treeData.nodeType === 'conditionEnter' &&
+          treeData.conditionNodes.length > 1
+      "
     >
-      <el-popover v-model="visible" placement="right" width="400" trigger="click">
+      <el-popover
+        v-model="visible"
+        placement="right"
+        width="400"
+        trigger="click"
+      >
         <el-button
           slot="reference"
           class="line-btn"
@@ -164,7 +192,12 @@
             <el-col style="margin-top: 10px">审批人</el-col>
           </el-col>
           <el-col :span="8" style="text-align: center;  padding: 29px 0">
-            <el-button type="danger" icon="el-icon-edit" circle @click="addChildNode('notifier')" />
+            <el-button
+              type="danger"
+              icon="el-icon-edit"
+              circle
+              @click="addChildNode('notifier')"
+            />
             <el-col style="margin-top: 10px">抄送人</el-col>
           </el-col>
           <el-col :span="8" style="text-align: center;  padding: 29px 0">
@@ -196,20 +229,31 @@
       <div class="done-circle"></div>
       <span>流程结束</span>
     </div>
+    <div class="pos">
+      <approver-dialog
+        :show.sync="dialogOption.show"
+        :option="dialogOption"
+        @approverDialog="approverDialog($event)"
+      ></approver-dialog>
+    </div>
   </div>
 </template>
 
 <script>
 import $ from "jquery";
+import approverDialog from './approver-dialog'
 
 export default {
   name: 'node',
   components: {
-
+    approverDialog
   },
   props: ["treeData", "myIndex", "broLength", "pId", "plin"], // 节点数据， 当前索引 ， 兄弟集合长度, 父节点id,
   data() {
     return {
+      dialogOption: {
+        show: false,
+      },
       visible: false,
       value: '审批人',
       value2: '条件',
@@ -241,7 +285,7 @@ export default {
         // 画线
         this.updateLine();
         this.updateBox();
-        console.log('node', this.treeData)
+        // console.log('node', this.treeData)
 
       },
       deep: true
@@ -254,13 +298,25 @@ export default {
     },
     // 添加子节点
     addChildNode(type) {
+      // console.log('sonNode', type)
       this.visible = false;
       this.eventBus.$emit("addChildNode", {
         nodeType: type,
-        parentId: this.treeData.id
+        parentId: this.treeData.id,
+        name: type === 'approver' ? '审批人' : '抄送人'
       });
     },
-    editDialog() { },
+    editDialog() {
+      this.dialogOption = {
+        show: true,
+        treeData: this.treeData
+      }
+
+
+    },
+    approverDialog(e) {
+      console.log('approver-dialog-back', e)
+    },
 
     updateLine() {
       if (this.plin !== 0) {
@@ -270,20 +326,25 @@ export default {
       const heiDom = $(`.heiLine${this.treeData.id}`).height(60)
       // console.log('hDom', heiDom)
       this.$nextTick(() => {
-        if (this.plin === 1 && !this.treeData.childNode) {
+        this.$nextTick(() => {
+          if (this.plin === 1 && !this.treeData.childNode) {
 
-          // 当前node若是一个在分支内最后的节点
-          const hDom = $(
-            $(`.node${this.treeData.id}`).closest(".node-item")
-          );
-          // console.log('hDom', hDom.offset().top)
-          const linDom = $(`.heiLine${this.treeData.id}`);
-          // console.log('linDom', linDom.offset().top)
-          const linDomHeight = linDom.height(
-            hDom.height() - (linDom.offset().top - hDom.offset().top)
-          );
-          // console.log('linDomHeight', linDomHeight.height())
-        }
+            // 当前node若是一个在分支内最后的节点
+            const hDom = $(
+              $(`.node${this.treeData.id}`).closest(".node-item")
+            );
+            // console.log('hDom', hDom.offset().top)
+            const linDom = $(`.heiLine${this.treeData.id}`);
+            // console.log('linDom', linDom.offset().top)
+            const linDomHeight = linDom.height(
+              hDom.height() - (linDom.offset().top - hDom.offset().top)
+            );
+            // console.log('linDomHeight', linDomHeight.height())
+          }
+        })
+
+
+
         // debugger
         //画横线
         if (this.treeData.nodeType === "conditionEnter") {
@@ -359,6 +420,9 @@ export default {
   flex-direction: column;
   align-items: center;
   position: relative;
+  .pos {
+    position: absolute;
+  }
   .bo {
     background: #e9b543;
   }

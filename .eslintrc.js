@@ -3,7 +3,7 @@
  * @Author: Coder
  * @Date: 2019-11-03 19:19:15
  * @LastEditors: Coder
- * @LastEditTime: 2019-11-17 00:09:58
+ * @LastEditTime: 2019-11-17 18:16:53
  * @FilePath: \myvueadmin\.eslintrc.js
  */
 module.exports = {
@@ -42,7 +42,9 @@ module.exports = {
     "vue/no-side-effects-in-computed-properties": 0,
     "no-return-assign": 0,
     "no-undef": 0,
-    "no-unreachable": 0
+    "no-unreachable": 0,
+    "no-constant-condition": 0,
+    "no-multi-spaces": 0
   },
   parserOptions: {
     parser: 'babel-eslint'

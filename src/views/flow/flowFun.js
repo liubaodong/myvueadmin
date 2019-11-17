@@ -3,7 +3,7 @@
  * @Author: Coder
  * @Date: 2019-11-14 14:05:31
  * @LastEditors: Coder
- * @LastEditTime: 2019-11-17 02:29:25
+ * @LastEditTime: 2019-11-17 18:04:46
  * @FilePath: \myvueadmin\src\views\flow\flowFun.js
  */
 
@@ -127,12 +127,11 @@ class flowFun {
    * @author: Coder
    */
   addChildNode(d, obj) {
-    // obj.id = this.getId();
-    // const data = this.deepCopy(d)
-    // this.myAddChildNode(data, obj);
-    // return data
+    // debugger
     obj.id = this.getId();
+
     const data = JSON.parse(JSON.stringify(d));
+    console.log('obj', data, obj)
     this.myAddChildNode(data, obj);
     return data;
   }
@@ -144,6 +143,7 @@ class flowFun {
    * @author: Coder
    */
   myAddChildNode(d, obj) {
+    console.log('d', d, obj)
     const data = d;
     if (obj.nodeType === 'conditionEnter') {
       obj.conditionNodes = [];
@@ -155,6 +155,7 @@ class flowFun {
           id: this.getId(),
           checkVal: [],
           ruleArr: [],
+          name: '条件'
         })
         i += 1
       }
@@ -165,8 +166,10 @@ class flowFun {
         if (data.childNode) {
           obj.childNode = copy(data.childNode);
           obj.childNode.parentId = obj.id
+          // obj.childNode.name = obj.name
           data.childNode = obj
         } else {
+
           data.childNode = obj
         }
       } else {
@@ -184,46 +187,6 @@ class flowFun {
         })
       }
     }
-    // ..............
-    // const data = d;
-    // if (obj.nodeType === 'conditionEnter') {
-    //   obj.conditionNodes = [];
-    //   let i = 0;
-    //   while (i < 2) {
-    //     obj.conditionNodes.push({
-    //       nodeType: 'condition',
-    //       parentId: obj.id,
-    //       id: this.getId(),
-    //       checkVal: [],
-    //       ruleArr: [],
-    //     });
-    //     i += 1;
-    //   }
-    // }
-    // if (data.id === obj.parentId) {
-    //   if (obj.nodeType !== 'condition') {
-    //     if (data.childNode) {
-    //       obj.childNode = copy(data.childNode);
-    //       obj.childNode.parentId = obj.id;
-    //       data.childNode = obj;
-    //     } else {
-    //       data.childNode = obj;
-    //     }
-    //   } else {
-    //     obj.checkVal = [];
-    //     obj.ruleArr = [];
-    //     data.conditionNodes.push(obj);
-    //   }
-    // } else {
-    //   if (data.childNode) {
-    //     this.myAddChildNode(data.childNode, obj);
-    //   }
-    //   if (data.conditionNodes) {
-    //     data.conditionNodes.forEach(i => {
-    //       this.myAddChildNode(i, obj);
-    //     });
-    //   }
-    // }
   }
   /**
    * @description:封装插入节点
